@@ -6,12 +6,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-import java.util.Collection;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "Student")
+@Document(collection = "student")
 public class StudentModel {
 
     @Id
@@ -21,6 +21,5 @@ public class StudentModel {
     private String name;
     private int age;
     private String email;
-
 
 }
