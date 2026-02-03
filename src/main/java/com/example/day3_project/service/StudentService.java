@@ -73,5 +73,6 @@ public class StudentService {
     public void deleteStudent(String id) {
         StudentModel student = repository.findById(id).orElseThrow(() -> new StudentNotFound("student not found"));
         repository.delete(student);
+
     }
 }
