@@ -1,5 +1,6 @@
 package com.example.day3_project.service;
 
+import com.example.day3_project.dto.StudentPatchRequestDto;
 import com.example.day3_project.dto.StudentRequestDto;
 import com.example.day3_project.dto.StudentResponseDto;
 import com.example.day3_project.exception.StudentNotFound;
@@ -58,6 +59,30 @@ public class StudentService {
         existingStudent.setName(student.getName());
         existingStudent.setAge(student.getAge());
         existingStudent.setEmail(student.getEmail());
+
+        StudentModel savedStudent = repository.save(existingStudent);
+
+        return new StudentResponseDto(
+                savedStudent.getId(),
+                savedStudent.getName(),
+                savedStudent.getEmail(),
+                savedStudent.getAge()
+        );
+    }
+    public StudentResponseDto patchStudent(String id, StudentPatchRequestDto student) {
+        StudentModel existingStudent = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("student not found"));
+
+        if (student.getName() != null && !student.getName().equals(existingStudent.getName())) {
+            existingStudent.setName(student.getName());
+        }
+        if (student.getAge() != null && !student.getAge().equals(existingStudent.getAge())) {
+            existingStudent.setAge(student.getAge());
+        }
+        if (student.getEmail() != null && !student.getEmail().equals(existingStudent.getEmail())) {
+            existingStudent.setEmail(student.getEmail());
+        }
+
 
         StudentModel savedStudent = repository.save(existingStudent);
 

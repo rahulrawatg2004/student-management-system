@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">Student Admin</p>
+          <h1>Manage students quickly and cleanly.</h1>
+          <p class="subhead">
+            Add new students, update details, or remove entries in seconds.
+          </p>
+        </div>
+        <div class="hero__panel">
+          <div class="panel__title">Student Form</div>
+          <form id="student-form" class="form">
+            <input type="hidden" id="student-id" />
+            <label class="field">
+              <span>Name</span>
+              <input type="text" id="name" placeholder="Jane Doe" required />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" id="email" placeholder="jane@uni.edu" required />
+            </label>
+            <label class="field">
+              <span>Age</span>
+              <input type="number" id="age" min="5" max="90" placeholder="19" required />
+            </label>
+            <div class="actions">
+              <button type="submit" class="btn btn--primary">Add Student</button>
+              <button type="button" id="update-btn" class="btn btn--ghost" disabled>
+                Update Student
+              </button>
+              <button type="button" id="reset-btn" class="btn btn--text">Clear</button>
+            </div>
+            <p id="status" class="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="list">
+          <div class="list__header">
+            <h2>Student Directory</h2>
+            <button id="refresh-btn" class="btn btn--ghost">Refresh</button>
+          </div>
+          <div id="student-list" class="list__grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
