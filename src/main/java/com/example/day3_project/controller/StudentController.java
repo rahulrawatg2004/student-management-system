@@ -5,6 +5,7 @@ import com.example.day3_project.dto.StudentRequestDto;
 import com.example.day3_project.dto.StudentResponseDto;
 import com.example.day3_project.model.StudentModel;
 import com.example.day3_project.service.StudentService;
+import com.example.day3_project.utils.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,19 +16,26 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService service;
-    public StudentController(StudentService service) {
+    private final JwtUtil jwtUtil;
+    public StudentController(StudentService service, JwtUtil jwtUtil) {
         this.service = service;
+        this.jwtUtil = jwtUtil;
+    }
+    private void checkToken(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) throw new RuntimeException("Invalid Token");
+        String token = authHeader.substring(7);
+        jwtUtil.validateTokenAndGetEmail((token));
     }
 
     @PostMapping("/add-student")
-    public StudentResponseDto addStudent(@Valid  @RequestBody StudentRequestDto student) {
-
+    public StudentResponseDto addStudent(@RequestHeader("Authorization") String authHeader,@Valid  @RequestBody StudentRequestDto student) {
+        checkToken(authHeader);
         return service.addStudent(student);
     }
 
     @GetMapping("/students")
-    public List<StudentResponseDto> getStudents(){
-
+    public List<StudentResponseDto> getStudents(@RequestHeader(value="Authorization", required=false) String authHeader) {
+        checkToken(authHeader);
         return service.getAllStudents();
     }
 
